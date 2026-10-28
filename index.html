@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#30352b">
+<title>Coffee Lab</title>
+<style>
+:root{--bg:#f4f1eb;--panel:#fffdf9;--ink:#292820;--muted:#777469;--line:#e4dfd4;--accent:#59674a;--accent2:#dce3d2}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}
+.app{display:grid;grid-template-columns:220px 1fr;min-height:100vh}aside{background:#30352b;color:#f8f5ee;padding:22px 14px;display:flex;flex-direction:column;gap:22px}.brand{padding:0 10px}.brand strong{display:block;font-size:21px}.brand span{font-size:12px;color:#c3c7b9}nav{display:grid;gap:6px}nav button{text-align:left;color:#e9e8df;background:transparent;border:0;padding:12px;border-radius:9px}nav button.active{background:#495141;color:white}.side-note{margin-top:auto;padding:10px;color:#c3c7b9;font-size:12px}
+main{padding:26px;max-width:1450px;width:100%;margin:auto;min-width:0}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:22px}.eyebrow{font-size:11px;letter-spacing:.08em;color:var(--muted)}h1{font-size:27px;margin:2px 0}.status{font-size:12px;background:#e5eadf;color:#45533b;border-radius:99px;padding:7px 10px}.page{display:none}.page.active{display:block}.grid{display:grid;gap:14px}.stats{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:16px}.two{grid-template-columns:1.1fr .9fr}.card{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:17px;min-width:0}.stat-label,.muted{color:var(--muted)}.stat-label{font-size:13px}.stat-value{font-size:26px;font-weight:700;margin:6px 0}.stat-foot{font-size:12px;color:var(--muted)}.head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:13px}.head h2{font-size:17px;margin:0}.btn{border:1px solid var(--line);background:#fffdf9;color:var(--ink);padding:10px 13px;border-radius:10px}.btn.primary{background:var(--accent);border-color:var(--accent);color:white}.btn.small{font-size:12px;padding:6px 9px}.btn.danger{color:#9c4d3e}.notice{background:#f0f4e9;border:1px solid #d8dfcd;border-radius:11px;padding:12px 14px;margin-bottom:16px;font-size:13px;color:#4a5740}.notice strong{display:block}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.field{display:flex;flex-direction:column;gap:5px;min-width:0}.field.full{grid-column:1/-1}.field label{font-size:13px;color:var(--muted)}input,select,textarea{display:block;width:100%;min-width:0;min-height:44px;border:1px solid #cfc9bc;background:#fff;border-radius:9px;padding:10px 11px;color:#292820;font-size:16px;opacity:1;-webkit-appearance:none;appearance:none}textarea{min-height:85px;resize:vertical}input:focus,select:focus,textarea:focus{outline:2px solid #a5b396;border-color:#59674a}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.page-intro{color:var(--muted);font-size:14px;margin:-10px 0 18px}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:11px 9px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}th{color:var(--muted);font-size:12px}.notes{white-space:normal;min-width:130px}.empty{text-align:center;padding:22px 8px;color:var(--muted);font-size:13px}.record{padding:12px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:10px}.record:first-of-type{border-top:0}.record strong{display:block}.record small{color:var(--muted)}.pill{background:var(--accent2);color:#45533b;border-radius:99px;padding:3px 8px;font-size:11px;white-space:nowrap}.estimate-panel{background:#f5f3ed;border:1px solid var(--line);border-radius:12px;padding:14px;margin:0 0 14px}.estimate-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.estimate-item{background:#fffdf9;border:1px solid var(--line);border-radius:10px;padding:10px}.estimate-item small{display:block;color:var(--muted);font-size:12px}.estimate-item strong{font-size:19px;display:block;margin-top:4px}.camera-preview{display:block;max-width:100%;max-height:240px;border-radius:10px;margin-top:10px;background:#eee}.timer-panel{background:#f5f3ed;border:1px solid var(--line);border-radius:12px;padding:14px;margin:0 0 14px}.timer-display{font-size:32px;font-weight:750;font-variant-numeric:tabular-nums;letter-spacing:.04em;margin:2px 0 8px}.timer-status{font-size:12px;color:var(--muted);margin-bottom:10px}.timer-buttons{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.timer-buttons .btn{min-height:44px;padding:8px 6px}.timer-buttons .btn:disabled{opacity:.45;cursor:not-allowed}.timer-buttons .btn.marked{background:var(--accent2);border-color:#aebba1}.foot{font-size:11px;color:var(--muted);margin-top:22px}
+@media(max-width:800px){.app{display:block}aside{padding:12px;gap:10px}.brand{padding:0 4px}.brand strong{font-size:19px}nav{display:flex;overflow-x:auto;gap:4px}nav button{white-space:nowrap;padding:9px 11px;font-size:14px}.side-note{display:none}main{padding:16px 12px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.two{grid-template-columns:1fr}.top{align-items:flex-start}h1{font-size:23px}.status{font-size:10px}}@media(max-width:440px){.estimate-grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.card{padding:14px}.stat-value{font-size:23px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside><div class="brand"><strong>☕ Coffee Lab</strong><span>コーヒー研究ノート</span></div>
+<nav id="nav"><button class="active" data-page="dashboard">⌂ ダッシュボード</button><button data-page="roasts">◉ 焙煎記録</button><button data-page="brews">⌁ 抽出レシピ</button><button data-page="inventory">▤ 在庫・原価</button><button data-page="analysis">✳ 分析メモ</button></nav>
+<div class="side-note">記録を残し、比較する。<br>次の一杯のための研究ノート。</div></aside>
+<main><div class="top"><div><div class="eyebrow">PERSONAL COFFEE WORKSPACE</div><h1 id="pageTitle">ダッシュボード</h1></div><span class="status">試作品</span></div>
+<section class="page active" id="dashboard"><div class="notice"><strong>保存について</strong>この版はブラウザ内に記録を保存します。クラウド同期はまだありません。記録が消える可能性に備えて、CSV出力を使ってください。</div>
+<div class="grid stats"><div class="card"><div class="stat-label">焙煎記録</div><div class="stat-value" id="statRoasts">0</div><div class="stat-foot">登録バッチ数</div></div><div class="card"><div class="stat-label">抽出レシピ</div><div class="stat-value" id="statBrews">0</div><div class="stat-foot">ドリップ・エスプレッソ</div></div><div class="card"><div class="stat-label">登録した豆</div><div class="stat-value" id="statBeans">0</div><div class="stat-foot">在庫アイテム数</div></div><div class="card"><div class="stat-label">在庫合計</div><div class="stat-value" id="statStock">0 g</div><div class="stat-foot">登録済み豆の残量</div></div></div>
+<div class="grid two"><div class="card"><div class="head"><h2>最近の焙煎</h2><button class="btn small" data-goto="roasts">記録を見る</button></div><div id="recentRoasts" class="empty">まだ焙煎記録がありません。</div></div><div class="card"><div class="head"><h2>すぐに記録する</h2></div><p class="muted">焙煎・抽出のあとに条件と味を記録。</p><div class="actions"><button class="btn primary" data-goto="roasts">＋ 焙煎を記録</button><button class="btn" data-goto="brews">＋ 抽出を記録</button><button class="btn" data-goto="inventory">＋ 豆を登録</button></div></div></div></section>
+
+<section class="page" id="roasts"><p class="page-intro">投入量、焙煎時間、クラック、仕上がりを記録します。</p><div class="card" style="margin-bottom:15px"><div class="head"><h2>焙煎記録を追加</h2><span class="pill">歩留まり自動計算</span></div><form id="roastForm"><div class="timer-panel" aria-label="焙煎タイマー"><div class="head"><h2>焙煎タイマー</h2><span class="pill" id="timerBadge">待機中</span></div><div class="timer-display" id="roastClock">00:00</div><div class="timer-status" id="timerStatus" aria-live="polite">CHARGE（投入）のタイミングでスタートを押してください。</div><div class="timer-buttons"><button class="btn primary" type="button" id="timerStart">CHARGE · スタート</button><button class="btn" type="button" data-mark="tp" disabled>TP · ターニングポイント</button><button class="btn" type="button" data-mark="de" disabled>DE · ドライエンド</button><button class="btn" type="button" data-mark="fc" disabled>FC · 1ハゼ開始</button><button class="btn" type="button" data-mark="fce" disabled>FCe · 1ハゼ終了</button><button class="btn" type="button" data-mark="sc" disabled>SC · 2ハゼ開始</button><button class="btn" type="button" id="timerDrop" disabled>DROP · 排出 / 停止</button><button class="btn" type="button" id="timerReset">タイマーをリセット</button></div><p class="muted" style="font-size:12px;margin:10px 0 0">スタート後、各イベントを起こした瞬間に該当ボタンを押すと経過時間を記録します。時間は分単位で下の項目へ自動入力されます。DROPで総焙煎時間も入力されます。</p></div>
+<div class="estimate-panel">
+<div class="head"><h2>焙煎度の目安</h2><span class="pill">自動推定</span></div>
+<div class="estimate-grid">
+<div class="estimate-item"><small>重量減少率</small><strong id="lossRate">—</strong></div>
+<div class="estimate-item"><small>重量減少量</small><strong id="lossGrams">—</strong></div>
+<div class="estimate-item"><small>重量ベースの推定</small><strong id="weightRoastEstimate">入力待ち</strong></div><div class="estimate-item"><small>1ハゼ後比率</small><strong id="developmentRatio">—</strong></div>
+</div>
+<p id="roastEstimateNote" class="muted" style="font-size:12px;margin:10px 0 0">投入量・焙煎後重量を入力すると推定します。豆の含水率や精製方法で変わるため、目安として使ってください。</p>
+</div>
+<div class="form-grid">
+<div class="field"><label for="rDate">焙煎日</label>焙煎日</label><input id="rDate" type="date" required></div><div class="field"><label for="rBean">豆・ロット名</label><input id="rBean" placeholder="例：グアテマラ Peña Roja" required></div>
+<div class="field"><label for="rIn">投入量 (g)</label><input id="rIn" type="number" min="0.1" step="0.1" placeholder="180" required></div><div class="field"><label for="rOut">焙煎後重量 (g)</label><input id="rOut" type="number" min="0" step="0.1" placeholder="145" required></div>
+<div class="field"><label for="rTime">総焙煎時間 (分)</label><input id="rTime" type="number" min="0" step="0.1" placeholder="13.5"></div><div class="field"><label for="rColor">煎り具合（実際の評価）</label><select id="rColor"><option>未設定</option><option>浅煎り</option><option>中煎り</option><option>中深煎り</option><option>深煎り</option></select></div>
+<div class="field full"><label for="beanPhoto">焙煎豆をカメラで撮影 / 写真を読み込む</label><input id="beanPhoto" type="file" accept="image/*" capture="environment"><img id="beanPhotoPreview" class="camera-preview" alt="焙煎豆の写真プレビュー" hidden><div class="actions"><button type="button" class="btn small" id="analyzePhoto" disabled>写真の明るさを解析</button><button type="button" class="btn small" id="clearPhoto">写真を外す</button></div><p id="photoResult" class="muted" style="font-size:12px;margin:4px 0 0">豆が画面中央を大きく占めるように撮影してください。背景・照明・カメラ補正で結果が変わります。</p></div>
+<div class="field"><label for="rFc">1ハゼ開始 FC (分)</label><input id="rFc" type="number" min="0" step="0.01" placeholder="自動入力"></div><div class="field"><label for="rFce">1ハゼ終了 FCe (分)</label><input id="rFce" type="number" min="0" step="0.01" placeholder="自動入力"></div>
+<div class="field"><label for="rSc">2ハゼ開始 SC (分)</label><input id="rSc" type="number" min="0" step="0.01" placeholder="自動入力"></div><div class="field"><label for="rTp">ターニングポイント TP (分)</label><input id="rTp" type="number" min="0" step="0.01" placeholder="自動入力"></div>
+<div class="field"><label for="rDe">ドライエンド DE (分)</label><input id="rDe" type="number" min="0" step="0.01" placeholder="自動入力"></div>
+<div class="field full"><label for="rTaste">味・香りのメモ</label><textarea id="rTaste" placeholder="甘い香り、後味、焼きムラなど"></textarea></div><div class="field full"><label for="rNotes">焙煎操作・気づき</label><textarea id="rNotes" placeholder="火力、振り方、色変わり、排気など"></textarea></div></div><div class="actions"><button class="btn primary" type="submit">焙煎記録を保存</button><button class="btn" type="reset">入力をクリア</button></div><p id="roastMessage" class="muted" aria-live="polite"></p></form></div><div class="card"><div class="head"><h2>焙煎履歴</h2><button class="btn small" id="exportRoasts">CSVを書き出す</button></div><div class="table-wrap" id="roastTable"></div></div></section>
+
+<section class="page" id="brews"><p class="page-intro">抽出条件と味の結果をセットで記録します。</p><div class="card" style="margin-bottom:15px"><div class="head"><h2>抽出レシピを追加</h2></div><form id="brewForm"><div class="form-grid">
+<div class="field"><label for="bDate">抽出日</label><input id="bDate" type="date" required></div><div class="field"><label for="bMethod">抽出方法</label><select id="bMethod"><option>ドリップ</option><option>エスプレッソ</option><option>その他</option></select></div>
+<div class="field"><label for="bBean">豆・焙煎ロット</label><input id="bBean" placeholder="例：グアテマラ 中深煎り" required></div><div class="field"><label for="bGrinder">ミル・挽き目</label><input id="bGrinder" placeholder="例：C40 27クリック"></div>
+<div class="field"><label for="bDose">粉量 (g)</label><input id="bDose" type="number" min="0" step="0.1" placeholder="12"></div><div class="field"><label for="bWater">湯量 / 抽出量 (ml)</label><input id="bWater" type="number" min="0" step="0.1" placeholder="150"></div>
+<div class="field"><label for="bTemp">湯温 (℃)</label><input id="bTemp" type="number" min="0" step="0.1" placeholder="85"></div><div class="field"><label for="bTime">抽出時間 (秒)</label><input id="bTime" type="number" min="0" step="1" placeholder="150"></div>
+<div class="field"><label for="bRating">評価 (1〜5)</label><select id="bRating"><option value="">未評価</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div><div class="field full"><label for="bTaste">味・改善メモ</label><textarea id="bTaste" placeholder="甘さ、苦味、酸味、質感、後味、次に変える条件"></textarea></div></div><div class="actions"><button class="btn primary" type="submit">抽出記録を保存</button><button class="btn" type="reset">入力をクリア</button></div><p id="brewMessage" class="muted" aria-live="polite"></p></form></div><div class="card"><div class="head"><h2>抽出履歴</h2><button class="btn small" id="exportBrews">CSVを書き出す</button></div><div class="table-wrap" id="brewTable"></div></div></section>
+
+<section class="page" id="inventory"><p class="page-intro">生豆・焙煎豆の在庫と購入コストを記録します。</p><div class="card" style="margin-bottom:15px"><div class="head"><h2>豆を在庫に追加</h2></div><form id="stockForm"><div class="form-grid">
+<div class="field"><label for="sBean">豆・ロット名</label><input id="sBean" placeholder="例：グアテマラ Peña Roja" required></div><div class="field"><label for="sType">在庫区分</label><select id="sType"><option>生豆</option><option>焙煎豆</option></select></div>
+<div class="field"><label for="sQty">在庫量 (g)</label><input id="sQty" type="number" min="0" step="0.1" placeholder="1000" required></div><div class="field"><label for="sCost">購入価格 (円)</label><input id="sCost" type="number" min="0" step="1" placeholder="2500" required></div>
+<div class="field"><label for="sDate">購入日</label><input id="sDate" type="date"></div><div class="field"><label for="sNote">メモ</label><input id="sNote" placeholder="産地、精製方法、購入先など"></div></div><div class="actions"><button class="btn primary" type="submit">在庫を登録</button><button class="btn" type="reset">入力をクリア</button></div><p id="stockMessage" class="muted" aria-live="polite"></p></form></div><div class="card"><div class="head"><h2>在庫一覧</h2><button class="btn small" id="exportStock">CSVを書き出す</button></div><div class="table-wrap" id="stockTable"></div></div></section>
+
+<section class="page" id="analysis"><p class="page-intro">記録の基本指標と、ChatGPTで分析するためのテキストを表示します。</p><div class="grid two"><div class="card"><div class="head"><h2>焙煎データの概要</h2></div><div id="analysisSummary" class="muted">焙煎記録を追加すると表示されます。</div></div><div class="card"><div class="head"><h2>AI分析用テキスト</h2><button class="btn small" id="copyAnalysis">コピー</button></div><textarea id="analysisText" readonly style="min-height:240px"></textarea><p class="muted" style="font-size:12px">AI APIは未接続です。コピーした記録をChatGPTに渡して分析できます。</p></div></div></section>
+<div class="foot">Coffee Lab prototype · ブラウザ内保存。CSVで定期的にバックアップしてください。</div>
+</main></div>
+<script>
+(function(){
+'use strict';
+const $=id=>document.getElementById(id), KEY='coffeeLabPrototypeV2';
+let data={roasts:[],brews:[],stock:[]};
+try{const saved=localStorage.getItem(KEY);if(saved)data={...data,...JSON.parse(saved)}}catch(e){console.warn('保存データを読み込めません',e)}
+const today=()=>new Date().toISOString().slice(0,10);
+['rDate','bDate','sDate'].forEach(id=>$(id).value=today());
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const n=v=>Number.isFinite(Number(v))?Number(v):0, fmt=v=>n(v).toLocaleString('ja-JP',{maximumFractionDigits:1});
+function save(){try{localStorage.setItem(KEY,JSON.stringify(data));return true}catch(e){alert('このブラウザでは保存できませんでした。プライベートブラウズやファイルのプレビューではなく、通常のブラウザで開いてください。');return false}}
+function go(page){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===page));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));$('pageTitle').textContent=({dashboard:'ダッシュボード',roasts:'焙煎記録',brews:'抽出レシピ',inventory:'在庫・原価',analysis:'分析メモ'})[page];window.scrollTo(0,0)}
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));
+document.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.goto)));
+function calcLoss(){
+ const input=n($('rIn').value), output=n($('rOut').value);
+ if(input<=0 || $('rIn').value==='' || $('rOut').value==='' || output>input) return {rate:null,grams:null,estimate:'—'};
+ const grams=input-output, rate=grams/input*100;
+ let estimate='目安外';
+ if(rate<11) estimate='浅煎り寄り';
+ else if(rate<13.5) estimate='浅〜中煎り寄り';
+ else if(rate<15.5) estimate='中煎り寄り';
+ else if(rate<17.5) estimate='中深煎り寄り';
+ else estimate='深煎り寄り';
+ return {rate,grams,estimate};
+}
+function updateRoastEstimate(){
+ const v=calcLoss();
+ $('lossRate').textContent=v.rate===null?'—':v.rate.toFixed(1)+'%';
+ $('lossGrams').textContent=v.grams===null?'—':v.grams.toFixed(1)+' g';
+ $('weightRoastEstimate').textContent=v.estimate;
+ const time=n($('rTime').value);
+ const fc=n($('rFc').value), fce=n($('rFce').value);
+ let extra='';
+ if(time>0) extra=' 総焙煎時間 '+time.toFixed(2)+'分。';
+ if(fc>0 && time>fc) extra+=' 1ハゼ後の時間は'+(time-fc).toFixed(2)+'分';
+ if(fc>0 && time>fc) extra+='（総時間の'+((time-fc)/time*100).toFixed(1)+'%）です。';
+ $('roastEstimateNote').textContent=(v.rate===null?'投入量と焙煎後重量を入力してください。':'重量減少率からの仮推定です。')+extra+' 重量減少率・時間だけでは焙煎度を確定できません。豆の含水率、品種、精製、熱量や焙煎機で変わるため、写真と味も合わせて判断してください。';
+}
+$('rIn').addEventListener('input',updateRoastEstimate);
+$('rOut').addEventListener('input',updateRoastEstimate);
+['rTime','rFc','rFce'].forEach(id=>$(id).addEventListener('input',updateRoastEstimate));
+let cameraBrightness=null, cameraEstimate='';
+let photoObjectUrl=null;
+$('beanPhoto').addEventListener('change',()=>{
+ const file=$('beanPhoto').files && $('beanPhoto').files[0];
+ if(!file){clearPhoto();return}
+ if(photoObjectUrl)URL.revokeObjectURL(photoObjectUrl);
+ photoObjectUrl=URL.createObjectURL(file);
+ $('beanPhotoPreview').src=photoObjectUrl;$('beanPhotoPreview').hidden=false;$('analyzePhoto').disabled=false;
+ $('photoResult').textContent='写真を読み込みました。「写真の明るさを解析」を押してください。';
+ cameraBrightness=null;cameraEstimate='';
+});
+$('analyzePhoto').addEventListener('click',()=>{
+ const img=$('beanPhotoPreview');
+ if(!img.src || img.hidden)return;
+ const canvas=document.createElement('canvas'), ctx=canvas.getContext('2d',{willReadFrequently:true});
+ const w=img.naturalWidth,h=img.naturalHeight;
+ if(!w||!h){$('photoResult').textContent='画像を読み込めませんでした。別の写真を選んでください。';return}
+ const size=160, scale=Math.min(size/w,size/h);
+ canvas.width=Math.max(1,Math.round(w*scale));canvas.height=Math.max(1,Math.round(h*scale));
+ ctx.drawImage(img,0,0,canvas.width,canvas.height);
+ const x0=Math.floor(canvas.width*.2), y0=Math.floor(canvas.height*.2), cw=Math.max(1,Math.floor(canvas.width*.6)), ch=Math.max(1,Math.floor(canvas.height*.6));
+ const pixels=ctx.getImageData(x0,y0,cw,ch).data;let sum=0,count=0;
+ for(let i=0;i<pixels.length;i+=4){const a=pixels[i+3]/255;if(a<.5)continue;sum+=(0.2126*pixels[i]+0.7152*pixels[i+1]+0.0722*pixels[i+2]);count++}
+ cameraBrightness=count?sum/count:null;
+ if(cameraBrightness===null){$('photoResult').textContent='写真を解析できませんでした。';return}
+ cameraEstimate=cameraBrightness>150?'明るめ（浅煎り寄りの見た目）':cameraBrightness>105?'中間（中煎り寄りの見た目）':cameraBrightness>70?'暗め（中深煎り寄りの見た目）':'かなり暗め（深煎り寄りの見た目）';
+ $('photoResult').textContent='画像中央部の平均明るさ：'+cameraBrightness.toFixed(0)+'/255。見た目の目安：'+cameraEstimate+'。背景や照明の影響が大きいため、絶対的な色判定ではありません。同じ照明・距離・背景で撮った写真同士の比較に使ってください。';
+});
+function clearPhoto(){
+ if(photoObjectUrl){URL.revokeObjectURL(photoObjectUrl);photoObjectUrl=null}
+ $('beanPhoto').value='';$('beanPhotoPreview').removeAttribute('src');$('beanPhotoPreview').hidden=true;$('analyzePhoto').disabled=true;
+ $('photoResult').textContent='豆が画面中央を大きく占めるように撮影してください。背景・照明・カメラ補正で結果が変わります。';
+ cameraBrightness=null;cameraEstimate='';
+}
+$('clearPhoto').addEventListener('click',clearPhoto);
+function bindForm(id,fields,type,msgId){$(id).addEventListener('submit',e=>{e.preventDefault();const record={id:Date.now().toString(36)+Math.random().toString(36).slice(2),...fields()};if(!record.date && type!=='stock')record.date=today();data[type].unshift(record);if(!save()){data[type].shift();return}e.target.reset();if(id==='roastForm'){ $('rDate').value=today(); resetRoastTimer(false); }if(id==='brewForm')$('bDate').value=today();if(id==='stockForm')$('sDate').value=today();$(msgId).textContent='保存しました。下の一覧に追加されています。';render();});}
+bindForm('roastForm',()=>({date:$('rDate').value,bean:$('rBean').value.trim(),input:n($('rIn').value),output:n($('rOut').value),time:$('rTime').value,color:$('rColor').value,lossPercent:calcLoss().rate,cameraBrightness:cameraBrightness,cameraEstimate:cameraEstimate,photoBrightness:cameraBrightness,tp:$('rTp').value,de:$('rDe').value,fc:$('rFc').value,fce:$('rFce').value,sc:$('rSc').value,taste:$('rTaste').value.trim(),notes:$('rNotes').value.trim()}),'roasts','roastMessage');
+bindForm('brewForm',()=>({date:$('bDate').value,method:$('bMethod').value,bean:$('bBean').value.trim(),grinder:$('bGrinder').value.trim(),dose:$('bDose').value,water:$('bWater').value,temp:$('bTemp').value,time:$('bTime').value,rating:$('bRating').value,taste:$('bTaste').value.trim()}),'brews','brewMessage');
+bindForm('stockForm',()=>({date:$('sDate').value,bean:$('sBean').value.trim(),type:$('sType').value,qty:n($('sQty').value),cost:n($('sCost').value),note:$('sNote').value.trim()}),'stock','stockMessage');
+function del(type,id){if(!confirm('この記録を削除しますか？'))return;const old=data[type];data[type]=old.filter(x=>x.id!==id);if(!save())data[type]=old;render()}
+function tbl(headers,rows){if(!rows.length)return '<div class="empty">まだ記録がありません。</div>';return '<table><thead><tr>'+headers.map(h=>'<th>'+h+'</th>').join('')+'</tr></thead><tbody>'+rows.join('')+'</tbody></table>'}
+function renderRoasts(){const rows=data.roasts.map(r=>`<tr><td>${esc(r.date)}</td><td>${esc(r.bean)}</td><td>${fmt(r.input)} g</td><td>${fmt(r.output)} g</td><td>${r.input?(r.output/r.input*100).toFixed(1)+'%':'—'}</td><td>${r.lossPercent!==undefined?Number(r.lossPercent).toFixed(1)+'%':'—'}</td><td>${r.time?esc(r.time)+' 分':'—'}</td><td>${esc(r.color)}${r.cameraEstimate?'<br><small>'+esc(r.cameraEstimate)+'</small>':''}</td><td class="notes">${esc(r.taste||r.notes||'—')}</td><td><button class="btn small danger" data-delete="roasts" data-id="${esc(r.id)}">削除</button></td></tr>`);$('roastTable').innerHTML=tbl(['日付','豆','投入量','焙煎後','歩留まり','重量減少率','時間','煎り具合 / 写真目安','メモ',''],rows);$('recentRoasts').innerHTML=data.roasts.length?data.roasts.slice(0,5).map(r=>`<div class="record"><div><strong>${esc(r.bean)}</strong><small>${esc(r.date)} · ${fmt(r.input)}g → ${fmt(r.output)}g</small></div><span class="pill">${r.input?(r.output/r.input*100).toFixed(1)+'%':'—'}</span></div>`).join(''):'<div class="empty">まだ焙煎記録がありません。</div>'}
+function renderBrews(){const rows=data.brews.map(b=>`<tr><td>${esc(b.date)}</td><td>${esc(b.method)}</td><td>${esc(b.bean)}</td><td>${b.dose?fmt(b.dose)+' g':'—'}</td><td>${b.water?fmt(b.water)+' ml':'—'}</td><td>${b.temp?esc(b.temp)+'℃':'—'}</td><td>${esc(b.grinder||'—')}</td><td>${b.rating?'★'.repeat(Number(b.rating)):'—'}</td><td class="notes">${esc(b.taste||'—')}</td><td><button class="btn small danger" data-delete="brews" data-id="${esc(b.id)}">削除</button></td></tr>`);$('brewTable').innerHTML=tbl(['日付','方法','豆','粉量','湯量/抽出量','湯温','挽き目','評価','メモ',''],rows)}
+function renderStock(){const rows=data.stock.map(s=>`<tr><td>${esc(s.bean)}</td><td>${esc(s.type)}</td><td>${fmt(s.qty)} g</td><td>¥${fmt(s.cost)}</td><td>¥${s.qty>0?(s.cost/s.qty*100).toFixed(1):'—'}</td><td>${esc(s.date||'—')}</td><td class="notes">${esc(s.note||'—')}</td><td><button class="btn small" data-adjust="${esc(s.id)}">残量変更</button> <button class="btn small danger" data-delete="stock" data-id="${esc(s.id)}">削除</button></td></tr>`);$('stockTable').innerHTML=tbl(['豆','区分','残量','登録価格','100gあたり','購入日','メモ','操作'],rows)}
+function renderAnalysis(){if(!data.roasts.length){$('analysisSummary').textContent='焙煎記録を追加すると表示されます。';$('analysisText').value='焙煎記録がまだありません。';return}const ys=data.roasts.filter(r=>r.input>0).map(r=>r.output/r.input*100),avg=ys.length?ys.reduce((a,b)=>a+b,0)/ys.length:0,latest=data.roasts[0];$('analysisSummary').innerHTML=`<p>焙煎記録：<strong>${data.roasts.length} 件</strong></p><p>平均歩留まり：<strong>${avg.toFixed(1)}%</strong></p><p>最新の記録：<strong>${esc(latest.bean)}</strong>（${esc(latest.date)}）</p><p>歩留まりだけで品質は判断できません。味や操作メモと合わせて比較してください。</p>`;$('analysisText').value='Coffee Lab 記録\\n\\n【焙煎】\\n'+data.roasts.map((r,i)=>`${i+1}. ${r.date} / ${r.bean}\\n投入量 ${r.input}g、焙煎後 ${r.output}g、歩留まり ${r.input?(r.output/r.input*100).toFixed(1):'—'}%、重量減少率 ${r.lossPercent!==undefined?Number(r.lossPercent).toFixed(1):'—'}%、時間 ${r.time||'未記録'}分、煎り具合 ${r.color}、写真目安 ${r.cameraEstimate||'未解析'}\\n1ハゼ ${r.fc||'未記録'}分、2ハゼ ${r.sc||'未記録'}分\\n味・香り: ${r.taste||'未記録'}\\n操作メモ: ${r.notes||'未記録'}`).join('\\n\\n')+'\\n\\n【抽出】\\n'+(data.brews.map(b=>`${b.date} / ${b.method} / ${b.bean}: 粉${b.dose||'?'}g、湯量/抽出量${b.water||'?'}ml、湯温${b.temp||'?'}℃、時間${b.time||'?'}秒、挽き目${b.grinder||'?'}、評価${b.rating||'未評価'}\\nメモ: ${b.taste||'未記録'}`).join('\\n\\n')||'抽出記録なし')}
+function render(){$('statRoasts').textContent=data.roasts.length;$('statBrews').textContent=data.brews.length;$('statBeans').textContent=data.stock.length;$('statStock').textContent=fmt(data.stock.reduce((a,s)=>a+s.qty,0))+' g';renderRoasts();renderBrews();renderStock();renderAnalysis()}
+document.addEventListener('click',e=>{const d=e.target.closest('[data-delete]');if(d)del(d.dataset.delete,d.dataset.id);const a=e.target.closest('[data-adjust]');if(a){const item=data.stock.find(s=>s.id===a.dataset.adjust);if(!item)return;const v=prompt(item.bean+' の新しい残量(g)',item.qty);if(v===null)return;const q=Number(v);if(!Number.isFinite(q)||q<0){alert('0以上の数値を入力してください');return}item.qty=q;save();render()}});
+function csvCell(v){return '"'+String(v??'').replace(/"/g,'""')+'"'}function csv(name,rows){const blob=new Blob(['\uFEFF'+rows.map(r=>r.map(csvCell).join(',')).join('\r\n')],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+$('exportRoasts').onclick=()=>csv('coffee-lab-roasts.csv',[['日付','豆','投入量g','焙煎後g','重量減少率%','時間分','煎り具合','写真明るさ','写真目安','TP分','DE分','FC分','FCe分','SC分','味・香り','操作メモ'],...data.roasts.map(r=>[r.date,r.bean,r.input,r.output,r.lossPercent,r.time,r.color,r.cameraBrightness,r.cameraEstimate,r.tp,r.de,r.fc,r.fce,r.sc,r.taste,r.notes])]);
+$('exportBrews').onclick=()=>csv('coffee-lab-brews.csv',[['日付','方法','豆','ミル・挽き目','粉量g','湯量/抽出量ml','湯温','時間秒','評価','味・改善メモ'],...data.brews.map(b=>[b.date,b.method,b.bean,b.grinder,b.dose,b.water,b.temp,b.time,b.rating,b.taste])]);
+$('exportStock').onclick=()=>csv('coffee-lab-stock.csv',[['豆','区分','在庫g','登録価格円','購入日','メモ'],...data.stock.map(s=>[s.bean,s.type,s.qty,s.cost,s.date,s.note])]);
+$('copyAnalysis').onclick=async()=>{try{await navigator.clipboard.writeText($('analysisText').value);alert('コピーしました')}catch(e){$('analysisText').focus();$('analysisText').select();alert('テキストを選択しました。コピーしてください。')}};
+// Roast timer: all milestones are measured from CHARGE, and each button records a split.
+let roastTimerStart=null, roastTimerInterval=null, roastTimerStopped=false, roastMarks={};
+const timerFields={tp:'rTp',de:'rDe',fc:'rFc',fce:'rFce',sc:'rSc'};
+const timerLabels={tp:'TP · ターニングポイント',de:'DE · ドライエンド',fc:'FC · 1ハゼ開始',fce:'FCe · 1ハゼ終了',sc:'SC · 2ハゼ開始',drop:'DROP · 排出'};
+function elapsedSeconds(){return roastTimerStart===null?0:Math.max(0,(Date.now()-roastTimerStart)/1000)}
+function formatClock(sec){sec=Math.floor(sec);return String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0')}
+function paintTimer(){$('roastClock').textContent=formatClock(elapsedSeconds())}
+function updateTimerButtons(){const running=roastTimerStart!==null&&!roastTimerStopped;$('timerStart').disabled=roastTimerStart!==null;$('timerDrop').disabled=!running;document.querySelectorAll('[data-mark]').forEach(b=>{b.disabled=!running;b.classList.toggle('marked',!!roastMarks[b.dataset.mark]);if(roastMarks[b.dataset.mark])b.textContent=timerLabels[b.dataset.mark]+' ✓'})}
+function resetRoastTimer(ask=true){if(ask&&roastTimerStart!==null&&!confirm('タイマーの計測結果をリセットしますか？入力済みのイベント時間も消えます。'))return;if(roastTimerInterval)clearInterval(roastTimerInterval);roastTimerInterval=null;roastTimerStart=null;roastTimerStopped=false;roastMarks={};Object.values(timerFields).forEach(id=>$(id).value='');$('rTime').value='';$('roastClock').textContent='00:00';$('timerBadge').textContent='待機中';$('timerStatus').textContent='CHARGE（投入）のタイミングでスタートを押してください。';$('timerStart').disabled=false;$('timerDrop').disabled=true;document.querySelectorAll('[data-mark]').forEach(b=>{b.disabled=true;b.classList.remove('marked');b.textContent=timerLabels[b.dataset.mark]})}
+$('timerStart').addEventListener('click',()=>{if(roastTimerStart!==null)return;roastTimerStart=Date.now();roastTimerStopped=false;$('timerBadge').textContent='計測中';$('timerStatus').textContent='計測中です。各イベントが起きた瞬間にボタンを押してください。';roastTimerInterval=setInterval(paintTimer,200);updateTimerButtons();paintTimer()});
+document.querySelectorAll('[data-mark]').forEach(b=>b.addEventListener('click',()=>{const key=b.dataset.mark;if(roastTimerStart===null||roastTimerStopped)return;const seconds=elapsedSeconds();roastMarks[key]=seconds;$(timerFields[key]).value=(seconds/60).toFixed(2);b.textContent=timerLabels[key]+' ✓';b.classList.add('marked');$('timerStatus').textContent=timerLabels[key]+' を '+formatClock(seconds)+'（'+(seconds/60).toFixed(2)+'分）で記録しました。'}));
+$('timerDrop').addEventListener('click',()=>{if(roastTimerStart===null||roastTimerStopped)return;const seconds=elapsedSeconds();$('rTime').value=(seconds/60).toFixed(2);roastTimerStopped=true;if(roastTimerInterval)clearInterval(roastTimerInterval);roastTimerInterval=null;$('timerBadge').textContent='停止';$('timerStatus').textContent='DROPを '+formatClock(seconds)+'（総焙煎時間 '+(seconds/60).toFixed(2)+'分）で記録しました。必要なら記録を保存してください。';paintTimer();updateTimerButtons()});
+$('timerReset').addEventListener('click',()=>resetRoastTimer(true));
+$('roastForm').addEventListener('reset',()=>setTimeout(()=>{resetRoastTimer(false);clearPhoto();updateRoastEstimate()},0));
+updateTimerButtons();
+updateRoastEstimate();
+render();
+})();
+</script>
+</body></html>
